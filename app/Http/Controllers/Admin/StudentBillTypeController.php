@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\SchoolLevel;
+use App\Http\Controllers\Controller;
+use App\Models\StudentBillType;
 use Illuminate\Http\Request;
 
-class SchoolLevelController extends Controller
+class StudentBillTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +35,7 @@ class SchoolLevelController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SchoolLevel $schoolLevel)
+    public function show(StudentBillType $studentBillType)
     {
         //
     }
@@ -42,7 +43,7 @@ class SchoolLevelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SchoolLevel $schoolLevel)
+    public function edit(StudentBillType $studentBillType)
     {
         //
     }
@@ -50,7 +51,7 @@ class SchoolLevelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SchoolLevel $schoolLevel)
+    public function update(Request $request, StudentBillType $studentBillType)
     {
         //
     }
@@ -58,7 +59,7 @@ class SchoolLevelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SchoolLevel $schoolLevel)
+    public function destroy(StudentBillType $studentBillType)
     {
         //
     }

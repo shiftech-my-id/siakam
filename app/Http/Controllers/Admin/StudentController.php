@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\SchoolClass;
+use App\Http\Controllers\Controller;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
-class SchoolClassController extends Controller
+class StudentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,6 +14,8 @@ class SchoolClassController extends Controller
     public function index()
     {
         //
+        $items = [];
+        return view('pages.admin.student.index', compact('items'));
     }
 
     /**
@@ -34,7 +37,7 @@ class SchoolClassController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SchoolClass $schoolClass)
+    public function show(Student $student)
     {
         //
     }
@@ -42,7 +45,7 @@ class SchoolClassController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SchoolClass $schoolClass)
+    public function edit(Student $student)
     {
         //
     }
@@ -50,7 +53,7 @@ class SchoolClassController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, SchoolClass $schoolClass)
+    public function update(Request $request, Student $student)
     {
         //
     }
@@ -58,7 +61,7 @@ class SchoolClassController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SchoolClass $schoolClass)
+    public function destroy(Student $student)
     {
         //
     }
