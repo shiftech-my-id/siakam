@@ -1,3 +1,4 @@
+<?php use App\Models\User; ?>
 @extends('pages.admin._layout', [
     'title' => 'Profil Saya',
     'nav_active' => 'profile',
@@ -32,22 +33,15 @@
           </div>
 
           <div class="form-group">
-            <label for="group_id">Grup Pengguna</label>
-            <input type="text" class="form-control" id="group_id" name="group"
-              value="{{ $user->group ? $user->group->name : '' }}" readonly>
+            <label for="role">Role</label>
+            <input type="text" class="form-control" id="role"
+              value="{{ User::roles()[$user->role] }}" readonly>
           </div>
           <div class="form-group">
             <div class="custom-control custom-checkbox">
               <input disabled type="checkbox" class="custom-control-input " id="active"
-                {{ $user->is_active ? 'checked="checked"' : '' }}>
+                {{ $user->active ? 'checked="checked"' : '' }}>
               <label class="custom-control-label" for="active">Akun Aktif</label>
-            </div>
-          </div>
-          <div class="form-group">
-            <div class="custom-control custom-checkbox">
-              <input disabled type="checkbox" class="custom-control-input " id="is_admin"
-                {{ $user->is_admin ? 'checked="checked"' : '' }}>
-              <label class="custom-control-label" for="is_admin">Hak Akses Administrator</label>
             </div>
           </div>
         </div>

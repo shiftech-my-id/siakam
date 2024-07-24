@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
@@ -21,19 +21,20 @@ class UserSeeder extends Seeder
 
         User::insert([
             'username' => 'admin',
-            'password' => Hash::make('12345'),
-            'is_active' => true,
-            'is_admin' => true,
             'fullname' => 'Administrator',
-            'group_id' => 1,
-        ]);
-        User::insert([
-            'username' => 'kasir',
             'password' => Hash::make('12345'),
-            'is_active' => true,
-            'is_admin' => false,
-            'fullname' => 'Kasir',
-            'group_id' => 2,
+            'active' => true,
+            'role' => User::ADMINISTRATOR,
+            'remember_token' => Str::random(10),
+        ]);
+
+        User::insert([
+            'username' => 'operator',
+            'fullname' => 'Operator',
+            'password' => Hash::make('12345'),
+            'active' => true,
+            'role' => User::OPERATOR,
+            'remember_token' => Str::random(10),
         ]);
 
         // $faker = \Faker\Factory::create('id_ID');

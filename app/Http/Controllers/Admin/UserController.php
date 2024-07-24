@@ -30,6 +30,7 @@ class UserController extends Controller
         'password.confirmed' => 'Kata sandi yang anda konfirmasi salah.',
         'password_confirmation.required' => 'Anda belum mengkonfirmasi kata sandi.',
         'current_password.required' => 'Kata sandi harus diisi.',
+        'role.required' => 'Pilih role pengguna.',
     ];
 
     public function index(Request $request)
@@ -39,26 +40,22 @@ class UserController extends Controller
         $filter = [
             'search' => $request->get('search', ''),
             'status' => $request->get('status', '-1'),
-            'type' => $request->get('type', '-1'),
-            'group_id' => $request->get('group_id', ''),
+            'role' => $request->get('role', ''),
         ];
-        $q = User::with('group');
+        $q = User::query();
         if ($filter['status'] != -1) {
-            $q->where('is_active', '=', $filter['status']);
+            $q->where('active', '=', $filter['status']);
         }
-        if ($filter['type'] != -1) {
-            $q->where('is_admin', '=', $filter['type']);
-        }
-        if ($filter['group_id'] > 0) {
-            $q->where('group_id', '=', $filter['group_id']);
+        if ($filter['role'] > 0) {
+            $q->where('role', '=', $filter['role']);
         }
         if (!empty($filter['search'])) {
             $q->where('username', 'like', '%' . $filter['search'] . '%');
             $q->orWhere('fullname', 'like', '%' . $filter['search'] . '%');
         }
         $items = $q->orderBy('fullname', 'asc')->paginate(10);
-        $groups = UserGroup::orderBy('name', 'asc')->get();
-        return view('pages.admin.user.index', compact('items', 'filter', 'groups'));
+        $roles = User::roles();
+        return view('pages.admin.user.index', compact('items', 'filter', 'roles'));
     }
 
     public function edit(Request $request, $id = 0)
@@ -74,10 +71,14 @@ class UserController extends Controller
         }
 
         if ($request->method() == 'POST') {
-            $rules = ['fullname' => self::VALIDATION_RULE_NAME];
+            $rules = [
+                'fullname' => self::VALIDATION_RULE_NAME,
+                'role' => 'required',
+            ];
 
             if (!$id) {
                 $rules['username'] = 'required|unique:users,username,' . $id . '|min:3|max:40';
+                $rules['password'] = self::VALIDATION_RULE_PASSWORD;
             } else if (!empty($request->password)) {
                 $rules['password'] = self::VALIDATION_RULE_PASSWORD;
             }
@@ -88,8 +89,8 @@ class UserController extends Controller
                 return redirect()->back()->withInput()->withErrors($validator);
             }
 
-            fill_with_default_value($data, ['is_active', 'is_admin'], false);
-            fill_with_default_value($data, ['group_id'], null);
+            fill_with_default_value($data, ['active'], false);
+            fill_with_default_value($data, ['role'], User::UNKNOWN_ROLE);
 
             if (empty($request->password)) {
                 unset($data['password']);
@@ -110,9 +111,9 @@ class UserController extends Controller
             return redirect('admin/user')->with('info', $message);
         }
 
-        $groups = UserGroup::orderBy('name', 'asc')->get();
+        $roles = User::roles();
 
-        return view('pages.admin.user.edit', compact('user', 'groups'));
+        return view('pages.admin.user.edit', compact('user', 'roles'));
     }
 
     public function profile(Request $request)
@@ -162,7 +163,7 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         if ($user->username == 'admin') {
-            return redirect('admin/user')->with('error', 'Akun <b>' . e($user->username) . '</b> tidak boleh dihapus.');
+            return redirect('admin/user')->with('error', 'Akun ' . e($user->username) . ' tidak boleh dihapus.');
         } else if ($user->id == Auth::user()->id) {
             return redirect('admin/user')->with('error', 'Anda tidak dapat menghapus akun sendiri.');
         }
@@ -170,11 +171,11 @@ class UserController extends Controller
         if ($request->method() == 'POST') {
             try {
                 $user->delete();
-                $message = 'Akun pengguna <b>' . e($user->username) . '</b> telah dihapus.';
+                $message = 'Akun pengguna ' . e($user->username) . ' telah dihapus.';
                 UserActivity::log(UserActivity::USER_MANAGEMENT, 'Hapus Pengguna', $message);
             } catch (QueryException $ex) {
-                $message = 'Grup pengguna <b>' . e($user->username) . '</b> tidak dapat dihapus. ' .
-                    'Grup sudah digunakan atau terdapat kesalahan pada sistem.';
+                $message = 'Pengguna ' . e($user->username) . ' tidak dapat dihapus. ' .
+                    'Pengguna sudah digunakan atau terdapat kesalahan pada sistem.';
             }
 
             return redirect('admin/user')->with('info', $message);

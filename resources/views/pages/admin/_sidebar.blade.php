@@ -59,14 +59,6 @@
                   </a>
                 </li>
               @endif
-              @if (Auth::user()->canAccess(AclResource::USER_GROUP_MANAGEMENT))
-                <li class="nav-item">
-                  <a class="nav-link {{ $nav_active == 'user-group' ? 'active' : '' }}" href="{{ url('/admin/user-group') }}">
-                    <i class="nav-icon fas fa-user-group"></i>
-                    <p>Grup Pengguna</p>
-                  </a>
-                </li>
-              @endif
               @if (Auth::user()->canAccess(AclResource::SETTINGS))
                 <li class="nav-item">
                   <a class="nav-link {{ $nav_active == 'settings' ? 'active' : '' }}" href="{{ url('/admin/settings') }}">

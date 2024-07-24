@@ -44,16 +44,18 @@
             @enderror
           </div>
           <div class="form-group">
-            <label for="group_id">Grup Pengguna</label>
-            <select class="custom-select select2" id="group_id" name="group_id">
-              <option value="" {{ !$user->group_id ? 'selected' : '' }}>-- Pilih Grup Pengguna --</option>
-              @foreach ($groups as $group)
-                <option value="{{ $group->id }}" {{ old('group_id', $user->group_id) == $group->id ? 'selected' : '' }}
-                  title="{{ $group->description }}">
-                  {{ $group->name }}
+            <label for="role">Role Pengguna</label>
+            <select class="custom-select select2 @error('role') is-invalid @enderror" id="role" name="role">
+              <option value="" {{ !$user->role ? 'selected' : '' }}>-- Pilih Role Pengguna --</option>
+              @foreach ($roles as $role => $roleName)
+                <option value="{{ $role }}" {{ old('role', $user->role) == $role ? 'selected' : '' }}>
+                  {{ $roleName }}
                 </option>
               @endforeach
             </select>
+            @error('role')
+              <span class="text-danger">{{ $message }}</span>
+            @enderror
           </div>
           <div class="form-group">
             <label for="password">Kata Sandi</label>
@@ -66,19 +68,11 @@
           </div>
           <div class="form-group">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input " id="active" name="is_active" value="1"
-                {{ old('is_active', $user->is_active) ? 'checked="checked"' : '' }}>
+              <input type="checkbox" class="custom-control-input " id="active" name="active" value="1"
+                {{ old('active', $user->active) ? 'checked="checked"' : '' }}>
               <label class="custom-control-label" for="active" title="Akun aktif dapat login">Aktif</label>
             </div>
             <div class="text-muted">Akun aktif dapat login.</div>
-          </div>
-          <div class="form-group">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input " id="is_admin" name="is_admin" value="1"
-                {{ old('is_admin', $user->is_admin) ? 'checked="checked"' : '' }}>
-              <label class="custom-control-label" for="is_admin" title="Akun pengguna pengelola">Administrator</label>
-            </div>
-            <p class="text-muted">Akun administrator memiliki hak akses penuh pada sistem.</p>
           </div>
         </div>
       </div>

@@ -45,7 +45,7 @@ class AuthController extends Controller
             if (!Auth::attempt($data)) {
                 $error = 'Username atau password salah!';
                 // UserActivity::log(UserActivity::AUTHENTICATION, 'Login', 'Login gagal. Pengguna dengan username ' . e($request->post('username')) . ' mencoba login.');
-            } else if (!Auth::user()->is_active) {
+            } else if (!Auth::user()->active) {
                 $error = 'Akun anda tidak aktif. Silahkan hubungi administrator!';
                 // UserActivity::log(UserActivity::AUTHENTICATION, 'Login', 'Login gagal. Pengguna tidak aktif dengan username ' . e($request->post('username')) . ' mencoba login.');
                 $this->_logout($request);
@@ -53,7 +53,7 @@ class AuthController extends Controller
                 $request->session()->regenerate();
                 // TODO: Redirect based on user role
                 // UserActivity::log(UserActivity::AUTHENTICATION, 'Login', 'Login sukses. Pengguna ' . e(Auth::user()->username) . ' telah login.');
-                return redirect('/admin/dashboard');
+                return redirect('/admin');
             }
 
             return redirect()->back()->withInput()->with('error', $error);

@@ -17,13 +17,14 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('fullname')->default('');
             $table->string('password')->default('');
-            $table->boolean('is_active')->default(false);
-            $table->boolean('is_admin')->default(false);
+            $table->boolean('active')->default(false);
+            $table->string('remember_token')->default('');
+            $table->unsignedTinyInteger('role')->default(0);
+
             $table->datetime('created_datetime')->nullable()->default(null);
             $table->datetime('updated_datetime')->nullable()->default(null);
             $table->unsignedBigInteger('created_by_uid')->nullable()->default(null);
             $table->unsignedBigInteger('updated_by_uid')->nullable()->default(null);
-            $table->foreign('group_id')->references('id')->on('user_groups');
         });
     }
 

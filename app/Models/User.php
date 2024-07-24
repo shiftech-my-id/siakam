@@ -9,18 +9,23 @@ class User extends Authenticatable
 {
     public $timestamps = false;
 
+    const UNKNOWN_ROLE = 0;
+    const ADMINISTRATOR = 1;
+    const OPERATOR = 2;
+    const TEACHER = 3;
+    const STUDENT = 11;
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'group_id',
         'username',
-        'password',
-        'is_active',
-        'is_admin',
         'fullname',
+        'password',
+        'active',
+        'role',
     ];
 
     /**
@@ -42,15 +47,28 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function group()
+    protected static $_roles = [
+        self::ADMINISTRATOR => 'Administrator',
+        self::OPERATOR => 'Operator',
+        self::TEACHER => 'Pengajar',
+    ];
+
+    protected static $_acl = [
+        User::OPERATOR => [
+            AclResource::SYSTEM_MENU => true,
+            AclResource::USER_ACTIVITY => true,
+        ]
+    ];
+
+    public static function roles()
     {
-        return $this->belongsTo(UserGroup::class);
+        return static::$_roles;
     }
 
     public function canAccess($resource)
     {
-        if ($this->is_admin) return true;
-        $acl = $this->group->acl();
+        if ($this->role == self::ADMINISTRATOR) return true;
+        $acl = isset(static::$_acl[$this->role]) ? static::$_acl[$this->role] : [];
         return isset($acl[$resource]) && $acl[$resource] == true;
     }
 
