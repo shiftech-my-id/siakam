@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->tinyInteger('priority')->default(0);
             $table->timestamps();
-            $table->foreign('level_id')->references('id')->on('levels')->onUpdate('cascade')->onDelete('restrict');
+            $table->foreign('level_id')->references('id')->on('school_levels')->onUpdate('cascade')->onDelete('restrict');
         });
     }
 
