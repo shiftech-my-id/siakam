@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,13 +21,17 @@ class Authenticate
         $user = Auth::user();
 
         // ignore access to login page
-        if ($request->path() == 'admin/login' && $user) {
-            if ($user->role_id == 1)
+        if ($request->path() == route('auth.login') && $user) {
+            if (
+                $user->role == User::ADMINISTRATOR
+                || $user->role == User::OPERATOR
+                || $user->role == User::TEACHER
+            ) {
                 return redirect('/admin');
+            }
             return redirect('/');
-        }
-        else if (!$user) {
-            return redirect(route('login'));
+        } else if (!$user) {
+            return redirect(route('auth.login'));
         }
 
         return $next($request);

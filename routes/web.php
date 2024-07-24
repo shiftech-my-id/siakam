@@ -6,10 +6,10 @@ use App\Http\Controllers\Admin\StudentBillController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\UserActivityController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\UserGroupController;
 use App\Http\Controllers\Public\AuthController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\OnlyAdmin;
+use App\Http\Middleware\OnlyGuest;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,7 +21,8 @@ Route::get('/kontak-kami', function () {
 })->name('contact');
 
 Route::controller(AuthController::class)->prefix('auth')->group(function () {
-    Route::match(['GET', 'POST'], 'login', 'login')->name('auth.login');
+    Route::match(['GET', 'POST'], 'login', 'login')->middleware([OnlyGuest::class])
+        ->name('auth.login');
     Route::match(['GET', 'POST'], 'logout', 'logout')->name('auth.logout');
 });
 
@@ -29,12 +30,6 @@ Route::middleware([Authenticate::class, OnlyAdmin::class])->prefix('admin')->gro
     Route::controller(SettingsController::class)->prefix('settings')->group(function () {
         Route::get('', 'edit');
         Route::post('save', 'save');
-    });
-
-    Route::controller(UserGroupController::class)->prefix('user-group')->group(function () {
-        Route::get('', 'index');
-        Route::match(['get', 'post'], 'edit/{id}', 'edit');
-        Route::get('delete/{id}', 'delete');
     });
 
     Route::controller(UserController::class)->prefix('user')->group(function () {
