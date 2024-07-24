@@ -7,6 +7,16 @@
   <section class="content">
     <div class="container-fluid">
       <div class="row">
+        <div class="col-12">
+          <div class="card">
+            <div class="card-body">
+              <h1>Selamat Datang, {{ Auth::user()->fullname }}</h1>
+              <p>Selamat datang di Aplikasi Sistem Informasi Akademik Madrasah (SIAKAM).</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
         <div class="col-lg-3 col-6">
           <div class="small-box bg-info">
             <div class="inner">
@@ -82,16 +92,6 @@
             </div>
             <a href="/admin/sales-order?status=0" class="small-box-footer"><i class="fas fa-arrow-circle-right"></i></a>
           </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h1>Selamat Datang, {{ Auth::user()->fullname }}</h1>
-                    <p>Terima kasih telah  menggunakan Aplikasi SIAKAM (Sistem Informasi Akademik Madrasah).</p>
-                </div>
-            </div>
         </div>
       </div>
     </div>

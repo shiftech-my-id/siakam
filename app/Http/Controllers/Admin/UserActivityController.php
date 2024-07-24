@@ -69,7 +69,7 @@ class UserActivityController extends Controller
     {
         $item = UserActivity::findOrFail($id);
         $item->delete();
-        return redirect('admin/user-activity')->with('info', 'Rekaman log aktivitas <b>#' . $item->id . '</b> telah dihapus.');
+        return redirect('admin/user-activity')->with('info', 'Rekaman log aktivitas #' . $item->id . ' telah dihapus.');
     }
 
     public function clear(Request $request)

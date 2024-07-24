@@ -67,7 +67,7 @@ class UserController extends Controller
         if (!$user) {
             return redirect('admin/user')->with('warning', 'Pengguna tidak ditemukan.');
         } else if ($user->username == 'admin') {
-            return redirect('admin/user')->with('warning', 'Akun <b>' . $user->username . '</b> tidak boleh diubah.');
+            return redirect('admin/user')->with('warning', 'Akun ' . $user->username . ' tidak boleh diubah.');
         }
 
         if ($request->method() == 'POST') {
@@ -99,9 +99,9 @@ class UserController extends Controller
             $user->fill($data);
 
             if (!$id) {
-                $message = 'Akun pengguna <b>' . $data['username'] . '</b> telah dibuat.';
+                $message = 'Akun pengguna ' . $data['username'] . ' telah dibuat.';
             } else {
-                $message = 'Akun pengguna <b>' . $data['username'] . '</b> telah diperbarui.';
+                $message = 'Akun pengguna ' . $data['username'] . ' telah diperbarui.';
             }
 
             $user->save();

@@ -19,7 +19,7 @@ use App\Models\User;
     <div class="card-body">
       <form action="?" method="GET">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-lg-6">
             <div class="form-group form-inline">
               <label class="mr-2" for="role">Role:</label>
               <select class="form-control custom-select mr-4" name="role" id="role"
@@ -39,7 +39,7 @@ use App\Models\User;
               </select>
             </div>
           </div>
-          <div class="col-md-6 d-flex justify-content-end">
+          <div class="col-lg-6 d-flex justify-content-end">
             <div class="form-group form-inline">
               <label class="mr-2" for="search">Cari:</label>
               <input type="text" class="form-control" name="search" id="search" value="{{ $filter['search'] }}"

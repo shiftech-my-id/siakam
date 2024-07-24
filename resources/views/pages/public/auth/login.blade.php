@@ -16,10 +16,9 @@
   <div class="login-box">
     <div class="card card-outline card-primary">
       <div class="card-header text-center text-muted">
-        <div>
-          <span>Masuk <b>{{ env('APP_NAME') }}</b><sup><small> v{{ env('APP_VERSION_STR') }}</sup></small></span>
-        </div>
-        <div class="h1"><b>{{ App\Models\Setting::value('company.name', 'Ma\'had ...') }}</b></div>
+        <div class="h3">Masuk</div>
+        <div>Sistem Informasi Akademik Madrasah</div>
+        <div class="h5"><b>{{ App\Models\Setting::value('school.name', 'Ma\'had ...') }}</b></div>
       </div>
       <div class="card-body">
         @if (Session::has('error'))
@@ -67,6 +66,7 @@
       </div>
     </div>
   </div>
+  <div class="mt-4 text-muted"> {{ env('APP_NAME') }}<sup>v{{ env('APP_VERSION_STR') }}</sup></div>
   <div class="mt-4 text-muted">&copy; Shift IT Solution 2024</div>
   <div class="mt-0 text-muted"><a href="https://shiftech.my.id">www.shiftech.my.id</a></div>
   <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>

@@ -10,7 +10,7 @@
       @csrf
       <div class="card-body">
         <h5>Konfirmasi Penghapusan Akun Pengguna</h5>
-        <p>Anda benar-benar akan menghapus akun pengguna <b>{{ $user->username }}</b>?</p>
+        <p>Anda benar-benar akan menghapus akun pengguna {{ $user->username }}?</p>
         <table>
           <tr>
             <td>Username</td>
