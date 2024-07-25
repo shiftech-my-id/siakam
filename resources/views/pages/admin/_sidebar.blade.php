@@ -13,13 +13,49 @@
   </a>
   <div class="sidebar">
     <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column nav-flat nav-flat nav-collapse-hide-child" data-widget="treeview" data-accordion="false" role="menu">
+      <ul class="nav nav-pills nav-sidebar flex-column nav-flat nav-flat nav-collapse-hide-child" data-widget="treeview"
+        data-accordion="false" role="menu">
         <li class="nav-item">
           <a class="nav-link {{ $nav_active == 'dashboard' ? 'active' : '' }}" href="{{ url('admin/') }}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>Dashboard</p>
           </a>
         </li>
+
+        {{-- @if (Auth::user()->canAccess(AclResource::REPORT_MENU)) --}}
+        <li class="nav-item {{ $menu_active == 'master' ? 'menu-open' : '' }}">
+          <a class="nav-link {{ $menu_active == 'master' ? 'active' : '' }}" href="#">
+            <i class="nav-icon fas fa-database"></i>
+            <p>
+              Master Data
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a class="nav-link {{ $nav_active == 'student' ? 'active' : '' }}"
+                href="{{ url('/admin/student') }}">
+                <i class="nav-icon fas fa-children"></i>
+                <p>Santri</p>
+              </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ $nav_active == 'school-grade' ? 'active' : '' }}"
+                  href="{{ url('/admin/school-grade') }}">
+                  <i class="nav-icon fas fa-boxes"></i>
+                  <p>Kelas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {{ $nav_active == 'school-stage' ? 'active' : '' }}"
+                  href="{{ url('/admin/school-stage') }}">
+                  <i class="nav-icon fas fa-people-roof"></i>
+                  <p>Marhalah</p>
+                </a>
+              </li>
+          </ul>
+        </li>
+        {{-- @endif --}}
 
         {{-- Report Menu --}}
         {{-- @if (Auth::user()->canAccess(AclResource::REPORT_MENU))
@@ -45,7 +81,8 @@
             <ul class="nav nav-treeview">
               @if (Auth::user()->canAccess(AclResource::USER_ACTIVITY))
                 <li class="nav-item">
-                  <a class="nav-link {{ $nav_active == 'user-activity' ? 'active' : '' }}" href="{{ url('/admin/user-activity') }}">
+                  <a class="nav-link {{ $nav_active == 'user-activity' ? 'active' : '' }}"
+                    href="{{ url('/admin/user-activity') }}">
                     <i class="nav-icon fas fa-file-waveform"></i>
                     <p>Log Aktivitas</p>
                   </a>
@@ -61,7 +98,8 @@
               @endif
               @if (Auth::user()->canAccess(AclResource::SETTINGS))
                 <li class="nav-item">
-                  <a class="nav-link {{ $nav_active == 'settings' ? 'active' : '' }}" href="{{ url('/admin/settings') }}">
+                  <a class="nav-link {{ $nav_active == 'settings' ? 'active' : '' }}"
+                    href="{{ url('/admin/settings') }}">
                     <i class="nav-icon fas fa-gear"></i>
                     <p>Pengaturan</p>
                   </a>

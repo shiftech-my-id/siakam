@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\SchoolStageController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\StudentBillController;
 use App\Http\Controllers\Admin\StudentController;
@@ -8,7 +9,6 @@ use App\Http\Controllers\Admin\UserActivityController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Public\AuthController;
 use App\Http\Middleware\Authenticate;
-use App\Http\Middleware\OnlyAdmin;
 use App\Http\Middleware\OnlyGuest;
 use Illuminate\Support\Facades\Route;
 
@@ -48,7 +48,13 @@ Route::middleware([Authenticate::class])->prefix('admin')->group(function () {
 
     Route::get('/', [DashboardController::class, 'index']);
 
-    Route::controller(StudentController::class)->prefix('admin/student')->group(function () {
+    Route::controller(SchoolStageController::class)->prefix('school-stage')->group(function () {
+        Route::get('', 'index');
+        Route::match(['get', 'post'], 'edit/{id}', 'edit');
+        Route::get('delete/{id}', 'delete');
+    });
+
+    Route::controller(StudentController::class)->prefix('student')->group(function () {
         Route::get('', 'index');
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
         Route::get('duplicate/{id}', 'duplicate');
@@ -59,7 +65,7 @@ Route::middleware([Authenticate::class])->prefix('admin')->group(function () {
         Route::get('print/{id}', 'print');
     });
 
-    Route::controller(StudentBillController::class)->prefix('admin/student-bill')->group(function () {
+    Route::controller(StudentBillController::class)->prefix('student-bill')->group(function () {
         Route::get('', 'index');
         Route::match(['get', 'post'], 'edit/{id}', 'edit');
         Route::get('duplicate/{id}', 'duplicate');
