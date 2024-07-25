@@ -23,10 +23,10 @@ Route::get('/kontak-kami', function () {
 Route::controller(AuthController::class)->prefix('auth')->group(function () {
     Route::match(['GET', 'POST'], 'login', 'login')->middleware([OnlyGuest::class])
         ->name('auth.login');
-    Route::match(['GET', 'POST'], 'logout', 'logout')->name('auth.logout');
+        Route::match(['GET', 'POST'], 'logout', 'logout')->name('auth.logout');
 });
 
-Route::middleware([Authenticate::class, OnlyAdmin::class])->prefix('admin')->group(function () {
+Route::middleware([Authenticate::class])->prefix('admin')->group(function () {
     Route::controller(SettingsController::class)->prefix('settings')->group(function () {
         Route::get('', 'edit');
         Route::post('save', 'save');
