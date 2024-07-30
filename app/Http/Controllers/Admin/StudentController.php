@@ -14,7 +14,9 @@ class StudentController extends Controller
     public function index()
     {
         //
-        $items = [];
+        $q = Student::with(['stage', 'grade']);
+        $q->orderBy('fullname', 'asc');
+        $items = $q->paginate(10);
         return view('pages.admin.student.index', compact('items'));
     }
 

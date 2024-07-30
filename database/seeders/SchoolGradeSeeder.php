@@ -35,7 +35,9 @@ class SchoolGradeSeeder extends Seeder
                 'name' => 'MT Baniin - ' . $i,
                 'stage_id' => 2
             ]);
+        }
 
+        for ($i = 1; $i <= 6; $i++) {
             SchoolGrade::insert([
                 'name' => 'MT Banaat - ' . $i,
                 'stage_id' => 3

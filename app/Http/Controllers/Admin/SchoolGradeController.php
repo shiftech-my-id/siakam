@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\SchoolGrade;
 use Illuminate\Http\Request;
 
 class SchoolGradeController extends Controller
@@ -12,7 +13,10 @@ class SchoolGradeController extends Controller
      */
     public function index(Request $request)
     {
-        //
+        $q = SchoolGrade::query();
+        $items = $q->orderBy('priority', 'asc')
+            ->orderBy('stage_id', 'asc')->paginate(10);
+        return view('pages.admin.school-grade.index', compact('items'));
     }
 
     /**
