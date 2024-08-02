@@ -16,14 +16,16 @@ class StudentFactory extends Factory
      */
     public function definition(): array
     {
-        $gender = fake()->randomElement(['male', 'female']);
+        $gender = fake()->randomElement(['M', 'F']);
+        $level = fake()->randomElement(0, 1, 2, 3);
+        $class = fake()->randomElement(['1 A', 'A', 'B', '2']);
 
         return [
             'nisn' => fake()->unique()->numberBetween(202401001, 202401100),
-            'fullname' => fake()->firstName($gender) . ' ' . fake()->lastName($gender),
+            'fullname' => fake()->firstName($gender == 'M' ? 'male' : 'female') . ' ' . fake()->lastName($gender),
             'gender' => $gender,
-            'grade_id' => null,
-            'stage_id' => null,
+            'grade' => null,
+            'level' => $level,
             'active' => true,
         ];
     }

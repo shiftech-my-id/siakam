@@ -12,7 +12,7 @@
   <ul>
     <li><a href="{{ route('home') }}">Beranda</a></li>
     <li><a href="{{ route('contact') }}">Kontak</a></li>
-    <li><a href="{{ route('student.auth.login') }}">Masuk</a></li>
+    <li><a href="{{ route('auth.login') }}">Masuk</a></li>
   </ul>
 
   @yield('content')

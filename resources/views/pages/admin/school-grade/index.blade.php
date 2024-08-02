@@ -34,10 +34,10 @@
                     <td>{{ $item->priority }}</td>
                     <td class="text-center">
                       <div class="btn-group">
-                        <a href="{{ url("/admin/school-stage/edit/$item->id") }}" class="btn btn-default btn-sm">
+                        <a href="{{ url("/admin/school-grade/edit/$item->id") }}" class="btn btn-default btn-sm">
                           <i class="fa fa-edit"></i>
                         </a>
-                        <a href="{{ url("/admin/school-stage/delete/$item->id") }}"
+                        <a href="{{ url("/admin/school-grade/delete/$item->id") }}"
                           onclick="return confirm('Anda yakin akan menghapus rekaman ini?')"
                           class="btn btn-danger btn-sm">
                           <i class="fa fa-trash"></i>

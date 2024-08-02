@@ -61,7 +61,7 @@ class SchoolStageController extends Controller
             //     $data
             // );
 
-            return redirect('admin/school-stage')->with('info', 'Kategori produk telah disimpan.');
+            return redirect('admin/school-stage')->with('info', 'Rekaman telah disimpan.');
         }
 
         return view('pages.admin.school-stage.edit', compact('item'));
@@ -75,7 +75,7 @@ class SchoolStageController extends Controller
         if (!$item = SchoolStage::find($id)) {
             $message = 'Marhalah tidak ditemukan.';
         } else if ($item->delete($id)) {
-            $message = 'Marhalah ' . e($item->name) . ' telah dihapus.';
+            $message = 'Rekaman ' . e($item->name) . ' telah dihapus.';
             // UserActivity::log(
             //     UserActivity::PRODUCT_CATEGORY_MANAGEMENT,
             //     'Hapus Kategori',

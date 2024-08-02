@@ -1,11 +1,11 @@
 @php
-  $title = ($item->id ? 'Edit' : 'Tambah') . ' Marhalah';
+  $title = ($item->id ? 'Edit' : 'Tambah') . ' Kelas';
 @endphp
 
 @extends('pages.admin._layout', [
     'title' => $title,
     'menu_active' => 'master',
-    'nav_active' => 'school-stage',
+    'nav_active' => 'school-grade',
 ])
 
 @section('content')
@@ -17,9 +17,23 @@
             @csrf
             <input type="hidden" name="id" value="{{ $item->id }}">
             <div class="form-group">
-              <label for="name">Nama Marhalah</label>
+                <label for="stage_id">Marhalah</label>
+                <select class="custom-select select2 @error('stage_id') is-invalid @enderror" id="stage_id" name="stage_id">
+                  <option value="" {{ !$item->stage_id ? 'selected' : '' }}>-- Pilih Marhalah --</option>
+                  @foreach ($stages as $stage)
+                    <option value="{{ $stage->id }}" {{ old('stage_id', $item->stage_id) == $stage->id ? 'selected' : '' }}>
+                      {{ $stage->name }}
+                    </option>
+                  @endforeach
+                </select>
+                @error('stage_id')
+                  <span class="text-danger">{{ $message }}</span>
+                @enderror
+              </div>
+            <div class="form-group">
+              <label for="name">Nama Kelas</label>
               <input type="text" class="form-control @error('name') is-invalid @enderror" autofocus id="name"
-                placeholder="Masukkan nama Marhalah" name="name" value="{{ old('name', $item->name) }}">
+                placeholder="Masukkan nama Kelas" name="name" value="{{ old('name', $item->name) }}">
               @error('name')
                 <span class="text-danger">
                   {{ $message }}
@@ -28,7 +42,7 @@
             </div>
             <div class="form-group">
               <label for="description">Deskripsi</label>
-              <input type="text" class="form-control" id="description" placeholder="Deskripsi marhalah"
+              <input type="text" class="form-control" id="description" placeholder="Deskripsi kelas"
                 name="description" value="{{ old('description', $item->description) }}">
             </div>
             <div class="form-group">
